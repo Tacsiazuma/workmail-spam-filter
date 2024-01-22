@@ -16,5 +16,5 @@ export async function isSpam(text: string): Promise<boolean> {
 }
 export async function train(text: string, spam: boolean): Promise<void> {
     await classifier.learn(text, spam ? "spam" : "non_spam")
-    fs.writeFileSync(path.join("src", "config.json"), classifier.toJson())
+    fs.writeFileSync(path.join("config.json"), classifier.toJson())
 }

@@ -12,7 +12,7 @@ export class WorkmailSpamFilterStack extends cdk.Stack {
         super(scope, id, props);
 
         const spamFilter = new nodejs.NodejsFunction(this, 'SpamFilter', {
-            entry: path.join(__dirname, '../src/index.ts'),
+            entry: path.join(__dirname, '../src/function/index.ts'),
             architecture: lambda.Architecture.ARM_64,
             functionName: 'SpamFilter',
             timeout: cdk.Duration.minutes(1),

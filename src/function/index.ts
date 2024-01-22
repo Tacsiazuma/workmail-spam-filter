@@ -1,4 +1,4 @@
-import { Handler, Event } from 'aws-lambda';
+import { Handler } from 'aws-lambda';
 import { isSpam } from './classifier';
 
 export const handler: Handler = async (event: Event) => {
@@ -15,4 +15,6 @@ export const handler: Handler = async (event: Event) => {
         ]
     }
 };
-
+interface Event {
+    subject: string
+}

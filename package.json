@@ -4,7 +4,8 @@
   "description": "CDK library for spam filter lambda with workmail",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "keywords": [
     "workmail",
@@ -20,6 +21,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@types/aws-lambda": "^8.10.131",
     "aws-cdk-lib": "^2.122.0",
     "aws-lambda": "^1.0.7",
     "bayes": "^1.0.0",

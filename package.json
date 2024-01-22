@@ -1,0 +1,28 @@
+{
+  "name": "workmail-spam-filter",
+  "version": "0.0.1",
+  "description": "CDK library for spam filter lambda with workmail",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "workmail",
+    "spam",
+    "filter",
+    "lambda",
+    "cdk"
+  ],
+  "author": "Krisztián Papp",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.122.0",
+    "aws-lambda": "^1.0.7",
+    "bayes": "^1.0.0",
+    "constructs": "^10.3.0"
+  }
+}

@@ -1,20 +1,32 @@
 const bayes = require('bayes')
-const fs = require('fs')
-const path = require('path')
-const config = require('./config.json')
-const classifier: Classifier = bayes.fromJson(JSON.stringify(config));
 
-interface Classifier {
+interface Bayes {
     learn(text: string, category: string): Promise<void>
     categorize(text: string): Promise<string>
     toJson(): string
-    fromJson(state: string): Classifier
+    fromJson(state: string): Bayes
+}
+enum Categories {
+    NON_SPAM = "non_spam", SPAM = "spam"
 }
 
-export async function isSpam(text: string): Promise<boolean> {
-    return await classifier.categorize(text) === "spam"
-}
-export async function train(text: string, spam: boolean): Promise<void> {
-    await classifier.learn(text, spam ? "spam" : "non_spam")
-    fs.writeFileSync(path.join("config.json"), classifier.toJson())
+export default class Classifier {
+    private readonly bayes: Bayes
+    constructor(config?: string) {
+        if (!config) {
+            this.bayes = bayes()
+        } else
+            this.bayes = bayes.fromJson(config)
+    }
+    async isSpam(text: string): Promise<boolean> {
+        return await this.bayes.categorize(text) === Categories.SPAM
+    }
+    async train(text: string[], spam: boolean): Promise<void> {
+        for (const i in text) {
+            await this.bayes.learn(text[i], spam ? Categories.SPAM : Categories.NON_SPAM)
+        }
+    }
+    export(): string {
+        return this.bayes.toJson()
+    }
 }

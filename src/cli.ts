@@ -1,11 +1,10 @@
 import { Command } from 'commander'
-import pkg from '../package.json'
 
 const fs = require('fs')
 const program = new Command()
 program.name('workmail-spam-filter')
     .description('CLI for workmail spam filter')
-    .version(pkg.version)
+    .version('0.1.1')
 
 const initialConfig = {
     "categories": {

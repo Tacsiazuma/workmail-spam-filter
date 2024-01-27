@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "ts-jest",
+    "learn": "ts-node src/learn.ts",
     "build": "tsc"
   },
   "keywords": [
@@ -24,6 +25,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.501.0",
     "@aws-sdk/client-workmailmessageflow": "^3.496.0",
     "@types/aws-lambda": "^8.10.131",
     "@types/mailparser": "^3.4.4",

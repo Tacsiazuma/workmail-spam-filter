@@ -20,10 +20,14 @@ Reference it:
             accountId: "1234567890"
         });
 
+Create an initial configuration for the classifier which will be deployed to s3
+
+## Initial configuration
+
 Once deployed to the same account and region as the workmail organization, you can reference it on the UI as an synchrounous lambda inbound rule. Spam messages will be moved to the junk folder.
 
 TODO:
 
+- [x] Add an S3 bucket to reference naive bayes classifier config from
 - [ ] Add the ability to bounce spam messages
 - [ ] Add automation to train on own data
-- [ ] Add an S3 bucket to reference naive bayes classifier config from

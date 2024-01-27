@@ -5,6 +5,7 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as logs from 'aws-cdk-lib/aws-logs';
+import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 
 const path = require("node:path")
 
@@ -16,6 +17,11 @@ export class WorkmailSpamFilterStack extends cdk.Stack {
             retention: logs.RetentionDays.ONE_MONTH,
         })
         const spamBucket = new s3.Bucket(this, 'SpamBucket')
+        // Upload a file to the S3 bucket
+        new s3deploy.BucketDeployment(this, 'DeployInitialConfig', {
+            sources: [s3deploy.Source.asset('db')],
+            destinationBucket: spamBucket,
+        });
         const spamFilter = new nodejs.NodejsFunction(this, 'SpamFilter', {
             entry: path.join(__dirname, '../src/function/index.ts'),
             architecture: lambda.Architecture.ARM_64,
@@ -47,6 +53,10 @@ export class WorkmailSpamFilterStack extends cdk.Stack {
             sourceArn: `arn:aws:workmail:${props.env.region}:${props.accountId}:organization/${props.organization}`,
             sourceAccount: props.accountId
         })
+        new cdk.CfnOutput(this, 'BucketArn', {
+            value: spamBucket.bucketArn,
+            description: 'The arn of the s3 bucket to be used',
+        });
     }
 }
 

@@ -1,9 +1,9 @@
-name: Publish to npm
+name: Run checks on PRs
 
 on:
-  release:
-    types:
-      - published
+  push:
+    branches:
+      - '**'
 
 jobs:
   publish:
@@ -23,8 +23,3 @@ jobs:
 
       - name: Run tests
         run: npm test
-
-      - name: Publish to npm
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

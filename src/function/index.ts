@@ -1,8 +1,10 @@
 import { Handler } from 'aws-lambda';
-import { isSpam } from './classifier';
+import Classifier from './classifier';
+import config from './config.json'
 
+const classifier = new Classifier(JSON.stringify(config))
 export const handler: Handler = async (event: Event) => {
-    const junk = await isSpam(event.subject);
+    const junk = await classifier.isSpam(event.subject);
     console.log(event.subject, "is", junk ? "spam" : "not spam")
     return {
         actions: [
@@ -17,4 +19,5 @@ export const handler: Handler = async (event: Event) => {
 };
 interface Event {
     subject: string
+    messageId: string
 }

@@ -20,21 +20,29 @@ Reference it in the code:
         accountId: "1234567890"
     });
 
-
 To create an initial empty configuration for the classifier, run 
 
     npx workmail-spam-filter@latest init
 
-and it will create a `config.json` in the folder `db` which will be deployed to S3. And then deploy it:
+and it will create a `config.json` in the folder `db` which will be deployed to S3. 
+
+As this file will be empty, you might want to train the classifier with your own data.
+
+    npx workmail-spam-filter@latest train 
+
+This command uses the `spam.json` and `valid.json` as sources for training, both containing string arrays and writes it to `config.json`, reusing its existing content.
+
+And then deploy it:
 
     cdk deploy
 
 Once deployed to the same account and region as the workmail organization, you can reference it on the UI as an synchrounous lambda inbound rule. Spam messages will be moved to the junk folder.
 
-TODO:
+## TODO
 
 - [x] Add an S3 bucket to reference naive bayes classifier config from
 - [x] Add CLI to create initial config
+- [x] Add automation to train on own data
+- [ ] Exclude stopwords during training and classifying
 - [ ] Check the body of the message not just the subject
 - [ ] Add the ability to bounce spam messages
-- [ ] Add automation to train on own data

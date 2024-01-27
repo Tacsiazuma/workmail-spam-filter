@@ -12,13 +12,13 @@ Add it as a dependency:
 
 Reference it: 
 
-        import { WorkmailSpamFilterStack } from 'workmail-spam-filter'
+    import { WorkmailSpamFilterStack } from 'workmail-spam-filter'
 
-        new WorkmailSpamFilterStack(app, 'WorkmailSpamFilterStack', {
-            env: { account: '1234567890', region: 'eu-west-1' },
-            organization: "m-123456789",
-            accountId: "1234567890"
-        });
+    new WorkmailSpamFilterStack(app, 'WorkmailSpamFilterStack', {
+        env: { account: '1234567890', region: 'eu-west-1' },
+        organization: "m-123456789",
+        accountId: "1234567890"
+    });
 
 Create an initial configuration for the classifier which will be deployed to s3
 

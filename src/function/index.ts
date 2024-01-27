@@ -1,16 +1,17 @@
 import { Handler } from 'aws-lambda';
+import { SpamFilter } from './spamfilter';
+import { S3Config } from './config/s3';
+import { WorkMailContentRetriever } from './content/workmail'
 import Classifier from './classifier';
-import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-const bucketName = process.env.BUCKET_NAME
 
-const client = new S3Client()
+const configuration = new S3Config(process.env.BUCKET_NAME)
+const retriever = new WorkMailContentRetriever()
 export const handler: Handler = async (event: Event) => {
-    const command = new GetObjectCommand({ Bucket: bucketName, Key: "config.json" })
-    const response = await client.send(command)
-    const objectContent = await response.Body.transformToString('utf-8')
-    const classifier = new Classifier(objectContent)
-    const junk = await classifier.isSpam(event.subject);
-    console.log(event.subject, "is", junk ? "spam" : "not spam")
+    const objectContent = await configuration.get()
+    const mimeText = await retriever.retrieve(event.messageId)
+    const classifier = SpamFilter.create(new Classifier(objectContent))
+    const junk = await classifier.isSpam(mimeText);
+    console.log(event.messageId, "is", junk ? "spam" : "not spam")
     return {
         actions: [
             {
@@ -23,6 +24,5 @@ export const handler: Handler = async (event: Event) => {
     }
 };
 interface Event {
-    subject: string
     messageId: string
 }

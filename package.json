@@ -1,6 +1,6 @@
 {
   "name": "workmail-spam-filter",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "CDK library for spam filter lambda with workmail",
   "main": "dist/index.js",
   "bin": "./dist/src/cli.js",

@@ -1,10 +1,11 @@
+#!/usr/bin/env node
 import { Command } from 'commander'
 
 const fs = require('fs')
 const program = new Command()
 program.name('workmail-spam-filter')
     .description('CLI for workmail spam filter')
-    .version('0.1.1')
+    .version('0.1.6')
 
 const initialConfig = {
     "categories": {
@@ -22,6 +23,9 @@ const initialConfig = {
 program.command('init')
     .description('Create an initial classifier configuration')
     .action(() => {
+        if (!fs.existsSync('db')) {
+            fs.mkdirSync('db');
+        }
         fs.writeFileSync('db/config.json', JSON.stringify(initialConfig))
     })
 program.parse()

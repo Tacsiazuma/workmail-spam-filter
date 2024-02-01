@@ -17,14 +17,15 @@ Reference it in the code:
     new WorkmailSpamFilterStack(app, 'WorkmailSpamFilterStack', {
         env: { account: '1234567890', region: 'eu-west-1' },
         organization: "m-123456789",
-        accountId: "1234567890"
+        accountId: "1234567890",
+        whitelistedRegex: "@example.com" // optional to whitelist mails checking the 'To:' header
     });
 
 To create an initial empty configuration for the classifier, run 
 
     npx workmail-spam-filter@latest init
 
-and it will create a `config.json` in the folder `db` which will be deployed to S3. 
+and it will create a `config.json` in the folder `db`. During the `cdk deploy` this will be deployed to S3. 
 
 As this file will be empty, you might want to train the classifier with your own data.
 
@@ -43,6 +44,7 @@ Once deployed to the same account and region as the workmail organization, you c
 - [x] Add an S3 bucket to reference naive bayes classifier config from
 - [x] Add CLI to create initial config
 - [x] Add automation to train on own data
+- [x] Check the body of the message not just the subject
+- [ ] Whitelist to and cc fields
 - [ ] Exclude stopwords during training and classifying
-- [ ] Check the body of the message not just the subject
 - [ ] Add the ability to bounce spam messages

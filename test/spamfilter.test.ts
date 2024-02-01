@@ -43,6 +43,28 @@ describe('spamfilter', () => {
             const isSpam = await spamfilter.isSpam(message.asRaw())
             expect(isSpam).toBe(false)
         })
+
+    })
+    describe('whitelisting', () => {
+        beforeEach(() => {
+            spamfilter = SpamFilter.create(new Classifier, {
+                whitelisted: /letscode.hu/
+            })
+        })
+
+        it('should categorize as spam if target address not whitelisted', async () => {
+            const message = createMessage()
+            message.setTo("not@whitelisted.org")
+            const isSpam = await spamfilter.isSpam(message.asRaw())
+            expect(isSpam).toBe(true)
+        })
+
+        it('should not categorize as spam if target address is whitelisted', async () => {
+            const message = createMessage()
+            message.setTo("not@letscode.hu")
+            const isSpam = await spamfilter.isSpam(message.asRaw())
+            expect(isSpam).toBe(false)
+        })
     })
     describe('w/ classifier', () => {
         beforeEach(() => {

@@ -30,7 +30,8 @@ export class WorkmailSpamFilterStack extends cdk.Stack {
             description: 'Lambda to handle spam messages',
             logGroup: logGroup,
             environment: {
-                BUCKET_NAME: spamBucket.bucketName
+                BUCKET_NAME: spamBucket.bucketName,
+                WHITELIST: props?.whitelistedRegex || ''
             }
         });
         spamFilter.addToRolePolicy(new iam.PolicyStatement({
@@ -62,5 +63,6 @@ export class WorkmailSpamFilterStack extends cdk.Stack {
 
 export interface WorkmailSpamFilterStackProps extends cdk.StackProps {
     organization: string,
-    accountId: string
+    accountId: string,
+    whitelistedRegex?: string
 }

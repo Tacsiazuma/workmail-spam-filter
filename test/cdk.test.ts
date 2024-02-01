@@ -7,7 +7,8 @@ describe('CDK', () => {
         new WorkmailSpamFilterStack(app, 'WorkmailSpamFilterStack', {
             env: { account: '1234567890', region: 'eu-west-1' },
             organization: "m-123456789",
-            accountId: "1234567890"
+            accountId: "1234567890",
+            whitelistedRegex: '@example\.com' // optional
         });
     })
 

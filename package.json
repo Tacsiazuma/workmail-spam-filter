@@ -23,6 +23,7 @@
     "devDependencies": {
         "@types/commander": "^2.12.2",
         "@types/jest": "^29.5.11",
+        "@types/nodemailer": "^6.4.14",
         "jest": "^29.7.0",
         "mimetext": "^3.0.16",
         "ts-jest": "^29.1.2",
@@ -40,6 +41,8 @@
         "commander": "^11.1.0",
         "constructs": "^10.3.0",
         "esbuild": "^0.20.0",
-        "mailparser": "^3.6.6"
+        "mailparser": "^3.6.6",
+        "nodemailer": "^6.9.9",
+        "uuid": "^9.0.1"
     }
 }

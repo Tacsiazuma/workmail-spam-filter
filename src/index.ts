@@ -30,18 +30,21 @@ export class WorkmailSpamFilterStack extends cdk.Stack {
             description: 'Lambda to handle spam messages',
             logGroup: logGroup,
             environment: {
-                BUCKET_NAME: spamBucket.bucketName
+                BUCKET_NAME: spamBucket.bucketName,
+                WHITELIST: props?.whitelistedRegex || ''
             }
         });
         spamFilter.addToRolePolicy(new iam.PolicyStatement({
-            actions: ['s3:GetObject'],
+            actions: ['s3:GetObject', 's3:PutObject'],
             resources: [spamBucket.bucketArn + '/*'],
         }));
         spamFilter.role.attachInlinePolicy(
             new iam.Policy(this, 'GetRawMessageContent', {
                 statements: [
                     new iam.PolicyStatement({
-                        actions: ['workmailmessageflow:GetRawMessageContent'],
+                        actions:
+                            ['workmailmessageflow:GetRawMessageContent',
+                                'workmailmessageflow:PutRawMessageContent'],
                         resources: ['*'],
                     }),
                 ],
@@ -53,6 +56,7 @@ export class WorkmailSpamFilterStack extends cdk.Stack {
             sourceArn: `arn:aws:workmail:${props.env.region}:${props.accountId}:organization/${props.organization}`,
             sourceAccount: props.accountId
         })
+
         new cdk.CfnOutput(this, 'BucketArn', {
             value: spamBucket.bucketArn,
             description: 'The arn of the s3 bucket to be used',
@@ -62,5 +66,6 @@ export class WorkmailSpamFilterStack extends cdk.Stack {
 
 export interface WorkmailSpamFilterStackProps extends cdk.StackProps {
     organization: string,
-    accountId: string
+    accountId: string,
+    whitelistedRegex?: string
 }

@@ -45,6 +45,7 @@ Once deployed to the same account and region as the workmail organization, you c
 - [x] Add CLI to create initial config
 - [x] Add automation to train on own data
 - [x] Check the body of the message not just the subject
+- [ ] Add the ability to mark mail as spam/not spam
+- [ ] Remove spam/not spam buttons once marked
 - [ ] Whitelist to and cc fields
 - [ ] Exclude stopwords during training and classifying
-- [ ] Add the ability to bounce spam messages
